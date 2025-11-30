@@ -1,0 +1,24 @@
+// ============================================
+// Debounce Utility
+// ============================================
+
+/**
+ * Crea una función debounced que retrasa la invocación hasta que 
+ * hayan pasado `delay` milisegundos desde la última invocación
+ */
+export function debounce<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return function debounced(...args: Parameters<T>) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}

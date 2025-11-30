@@ -4,6 +4,7 @@
 
 import { useCallback } from 'react';
 import { useClientStore } from '@/stores';
+import { useShallow } from 'zustand/react/shallow';
 import type { ClientData } from '@/types';
 
 /**
@@ -18,14 +19,14 @@ export function useClient() {
     createClient,
     clearCurrentClient,
   } = useClientStore(
-    (state) => ({
+    useShallow((state) => ({
       currentClient: state.currentClient,
       clientsHistory: state.clientsHistory,
       isLoading: state.isLoading,
       findClientByDNI: state.findClientByDNI,
       createClient: state.createClient,
       clearCurrentClient: state.clearCurrentClient,
-    })
+    }))
   );
 
   const searchByDNI = useCallback(

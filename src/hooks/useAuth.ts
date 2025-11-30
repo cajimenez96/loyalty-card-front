@@ -4,19 +4,20 @@
 
 import { useCallback } from 'react';
 import { useAuthStore } from '@/stores';
+import { useShallow } from 'zustand/react/shallow';
 
 /**
  * Hook para gestión de autenticación
  */
 export function useAuth() {
   const { user, isAuthenticated, isLoading, login, logout } = useAuthStore(
-    (state) => ({
+    useShallow((state) => ({
       user: state.user,
       isAuthenticated: state.isAuthenticated,
       isLoading: state.isLoading,
       login: state.login,
       logout: state.logout,
-    })
+    }))
   );
 
   const handleLogin = useCallback(

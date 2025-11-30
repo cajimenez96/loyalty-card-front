@@ -4,6 +4,7 @@
 
 import { useEffect, useCallback } from 'react';
 import { useCampaignStore } from '@/stores';
+import { useShallow } from 'zustand/react/shallow';
 import type { CampaignStatus, Campaign } from '@/types';
 
 /**
@@ -19,7 +20,7 @@ export function useCampaign() {
     fetchActiveCampaign,
     fetchCampaignProducts,
   } = useCampaignStore(
-    (state) => ({
+    useShallow((state) => ({
       activeCampaign: state.activeCampaign,
       campaigns: state.campaigns,
       campaignProducts: state.campaignProducts,
@@ -27,7 +28,7 @@ export function useCampaign() {
       fetchCampaigns: state.fetchCampaigns,
       fetchActiveCampaign: state.fetchActiveCampaign,
       fetchCampaignProducts: state.fetchCampaignProducts,
-    })
+    }))
   );
 
   // Auto-fetch active campaign on mount
